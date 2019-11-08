@@ -23,13 +23,13 @@ def darknet53(input_data):
     route_1 = input_data
     input_data = convolutional(input_data, (3, 3, 256, 512), down_sample=True)
 
-    for i in range(1):
+    for i in range(8):
         input_data = res_block(input_data, 512, 256, 512)
 
     route_2 = input_data
     input_data = convolutional(input_data, (3, 3, 512, 1024), down_sample=True)
 
-    for i in range(1):
+    for i in range(4):
         input_data = res_block(input_data, 1024, 512, 1024)
 
     return route_1, route_2, input_data
