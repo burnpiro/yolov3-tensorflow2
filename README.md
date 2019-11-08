@@ -1,5 +1,7 @@
 ## YOLOv3 implementation in TensorFlow 2.0
 
+![alt text][image]
+
 #### Installation
 
 ```bash
@@ -21,3 +23,6 @@ python detect.py --image ./image.jpg --output ./output.jpg
 - [NMS implementation](https://github.com/bharatsingh430/soft-nms)
 - [DarkNet Implementation](https://github.com/pjreddie/darknet)
 - [YOLO implementation](https://github.com/zzh8829/yolov3-tf2)
+
+
+[image]: ./default_output.jpg "Logo Title Text 2"
