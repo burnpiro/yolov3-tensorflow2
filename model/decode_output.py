@@ -10,8 +10,8 @@ STRIDES = np.array(cfg.YOLO.STRIDES)
 
 def decode(conv_output, i=0):
     """
-    [batch_size, output_size, output_size, anchor_per_scale, 5 + num_classes]
-    (x, y, w, h, score, probability)
+    :return [batch_size, output_size, output_size, anchor_per_scale, 5 + num_classes]
+    box format: (x, y, w, h, score, probability)
     """
 
     conv_shape = tf.shape(conv_output)
