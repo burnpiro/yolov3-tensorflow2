@@ -1,22 +1,20 @@
 import tensorflow as tf
+import numpy as np
 
 
 def bbox_iou(boxes1, boxes2):
-    box1 = tf.concat([boxes1[..., :2] - boxes1[..., 2:] * 0.5,
-                      boxes1[..., :2] + boxes1[..., 2:] * 0.5],
-                     axis=-1)
-    box2 = tf.concat([boxes2[..., :2] - boxes2[..., 2:] * 0.5,
-                      boxes2[..., :2] + boxes2[..., 2:] * 0.5],
-                     axis=-1)
+    boxes1 = np.array(boxes1)
+    boxes2 = np.array(boxes2)
 
-    area1 = (box1[..., 2] - box1[..., 0]) * (box1[..., 3] - box1[..., 1])
-    area2 = (box2[..., 2], - box2[..., 0]) * (box2[..., 3] - box2[..., 1])
+    boxes1_area = (boxes1[..., 2] - boxes1[..., 0]) * (boxes1[..., 3] - boxes1[..., 1])
+    boxes2_area = (boxes2[..., 2] - boxes2[..., 0]) * (boxes2[..., 3] - boxes2[..., 1])
 
-    left_up = tf.maximum(boxes1[..., :2], boxes2[..., :2])
-    right_down = tf.minimum(boxes1[..., :2], boxes2[..., 2:])
+    left_up       = np.maximum(boxes1[..., :2], boxes2[..., :2])
+    right_down    = np.minimum(boxes1[..., 2:], boxes2[..., 2:])
 
-    intersection = tf.maximum(right_down - left_up, 0.0)
-    is_area = intersection[..., 0] * intersection[..., 1]
-    union_area = area1 + area2 - is_area
+    inter_section = np.maximum(right_down - left_up, 0.0)
+    inter_area    = inter_section[..., 0] * inter_section[..., 1]
+    union_area    = boxes1_area + boxes2_area - inter_area
+    ious          = np.maximum(1.0 * inter_area / union_area, np.finfo(np.float32).eps)
 
-    return 1.0 * is_area / union_area
+    return ious
