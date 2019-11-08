@@ -1,0 +1,2 @@
+easydict==1.9
+tensorflow>=2.0.0
