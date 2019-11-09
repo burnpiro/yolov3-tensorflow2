@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import tensorflow as tf
 from config import cfg
 from model.utils.bbox_iou import bbox_iou
 
@@ -80,6 +81,11 @@ def image_preporcess(image, target_size, gt_boxes=None):
         gt_boxes[:, [1, 3]] = gt_boxes[:, [1, 3]] * scale + dh
         return image_paded, gt_boxes
 
+
+def transform_images(x_train, size):
+    x_train = tf.image.resize(x_train, (size, size))
+    x_train = x_train / 255
+    return x_train
 
 def draw_outputs(img, boxes, class_names=read_class_names(cfg.YOLO.CLASSES), draw_labels=True):
     for i, box in enumerate(boxes):
